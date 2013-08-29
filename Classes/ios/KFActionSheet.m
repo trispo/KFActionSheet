@@ -89,7 +89,7 @@
 }
 
 
-- (void)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *button = [self buttonWithTitle:title image:image handler:handler];
     [button setTitleColor:[UIColor colorWithRed:0.887 green:0.159 blue:0.123 alpha:1.000] forState:UIControlStateNormal];
@@ -101,16 +101,18 @@
     }
 
     [self.actionView addButton:button];
+    return button;
 }
 
 
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *button = [self buttonWithTitle:title image:image handler:handler];
     [button setTitleColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
         
     [self.actionView addButton:button];
+    return button;
 }
 
 
@@ -143,7 +145,7 @@
 }
 
 
-- (void)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *cancelButton = [KFActionSheetButton new];
     [cancelButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
@@ -160,6 +162,8 @@
     }
 
     [self.actionView addCancelButton:cancelButton];
+    
+    return cancelButton;
 }
 
 
