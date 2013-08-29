@@ -10,4 +10,8 @@
 
 @interface KFActionSheetButton : UIButton
 
+
+@property (nonatomic) CGFloat height;
+
+
 @end
