@@ -9,15 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @class KFActionSheet;
+@class KFActionSheetButton;
 
 typedef void(^KFActionSheetButtonHandler)(KFActionSheet *actionSheet);
 
 @interface KFActionSheet : UIView
 
 - (void)show;
-- (void)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler;
-- (void)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler;
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler;
+- (KFActionSheetButton *)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler;
+- (KFActionSheetButton *)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler;
+- (KFActionSheetButton *)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler;
 
 
 @end
