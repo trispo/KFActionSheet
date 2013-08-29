@@ -1,0 +1,14 @@
+PODS:
+  - KFActionSheet (0.0.1)
+
+DEPENDENCIES:
+  - KFActionSheet (from `../`)
+
+EXTERNAL SOURCES:
+  KFActionSheet:
+    :path: ../
+
+SPEC CHECKSUMS:
+  KFActionSheet: b6b687a68ab13dc2459d922d3629268ec9316e85
+
+COCOAPODS: 0.23.0
