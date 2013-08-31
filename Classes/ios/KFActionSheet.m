@@ -10,17 +10,24 @@
 #import "KFActionSheetButton.h"
 #import "KFActionView.h"
 
+
 @interface KFActionSheet ()
+
 
 @property (strong, nonatomic) NSMutableDictionary *buttonActionHandlers;
 
 @property (strong, nonatomic) NSLayoutConstraint *actionSheetBottomConstraint;
+
 @property (strong, nonatomic) KFActionView *actionView;
 
 @property (strong, nonatomic) UIView *backgroundView;
 
 @property (nonatomic, strong) UIWindow *oldKeyWindow;
+
 @property (strong, nonatomic) UIWindow *actionSheetWindow;
+
+@property (nonatomic) BOOL isVisible;
+
 
 @end
 
@@ -86,6 +93,11 @@
         if (handler != nil)
         {
             handler(weakSelf);
+        }
+        
+        if (finished)
+        {
+            self.isVisible = NO;
         }
     }];
 }
@@ -171,6 +183,11 @@
 
 - (void)show
 {
+    if (self.isVisible)
+    {
+        return;
+    }
+    
     self.oldKeyWindow = [[UIApplication sharedApplication] keyWindow];
 
     self.frame = self.oldKeyWindow.bounds;
