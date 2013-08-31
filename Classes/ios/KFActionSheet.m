@@ -10,17 +10,24 @@
 #import "KFActionSheetButton.h"
 #import "KFActionView.h"
 
+
 @interface KFActionSheet ()
+
 
 @property (strong, nonatomic) NSMutableDictionary *buttonActionHandlers;
 
 @property (strong, nonatomic) NSLayoutConstraint *actionSheetBottomConstraint;
+
 @property (strong, nonatomic) KFActionView *actionView;
 
 @property (strong, nonatomic) UIView *backgroundView;
 
 @property (nonatomic, strong) UIWindow *oldKeyWindow;
+
 @property (strong, nonatomic) UIWindow *actionSheetWindow;
+
+@property (nonatomic) BOOL isVisible;
+
 
 @end
 
@@ -35,6 +42,8 @@
         self.buttonActionHandlers = [NSMutableDictionary dictionary];
         [self createBackgroundView];
         [self createActionView];
+        
+        _animationDuration = .3f;
     }
     return self;
 }
@@ -72,7 +81,7 @@
     
     __weak KFActionSheet *weakSelf = self;
     self.actionSheetBottomConstraint.constant = [self.actionView intrinsicContentSize].height;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 0;
         [weakSelf layoutIfNeeded];
@@ -84,6 +93,11 @@
         if (handler != nil)
         {
             handler(weakSelf);
+        }
+        
+        if (finished)
+        {
+            self.isVisible = NO;
         }
     }];
 }
@@ -169,6 +183,11 @@
 
 - (void)show
 {
+    if (self.isVisible)
+    {
+        return;
+    }
+    
     self.oldKeyWindow = [[UIApplication sharedApplication] keyWindow];
 
     self.frame = self.oldKeyWindow.bounds;
@@ -192,7 +211,7 @@
     self.actionSheetBottomConstraint.constant = 0;
 
     __weak KFActionSheet *weakSelf = self;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 1;
         [weakSelf layoutIfNeeded];
