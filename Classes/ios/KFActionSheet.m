@@ -35,6 +35,8 @@
         self.buttonActionHandlers = [NSMutableDictionary dictionary];
         [self createBackgroundView];
         [self createActionView];
+        
+        _animationDuration = .3f;
     }
     return self;
 }
@@ -72,7 +74,7 @@
     
     __weak KFActionSheet *weakSelf = self;
     self.actionSheetBottomConstraint.constant = [self.actionView intrinsicContentSize].height;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 0;
         [weakSelf layoutIfNeeded];
@@ -192,7 +194,7 @@
     self.actionSheetBottomConstraint.constant = 0;
 
     __weak KFActionSheet *weakSelf = self;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 1;
         [weakSelf layoutIfNeeded];
