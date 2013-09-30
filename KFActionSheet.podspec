@@ -1,9 +1,3 @@
-#
-# Be sure to run `pod spec lint NAME.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
-#
-# To learn more about the attributes see http://docs.cocoapods.org/specification.html
-#
 Pod::Spec.new do |s|
   s.name         = "KFActionSheet"
   s.version      = "0.1.1"
@@ -14,10 +8,10 @@ Pod::Spec.new do |s|
                     #* Markdown format.
                     #* Don't worry about the indent, we strip it!
                    #DESC
-  s.homepage     = "https://github.com/trispo/KFActionSheet"
+  s.homepage     = "pods.kf-interactive.com"
   s.screenshots  = "https://github.com/trispo/KFActionSheet/Screenshots/screenshot.png"
   s.license      = 'MIT'
-  s.author       = { "Gunnar Herzog" => "gunnar.herzog@kf-interactive.com" }
+  s.author       = { "Gunnar Herzog" => "gunnar.herzog@kf-interactive.com", "Rico Becker" => "rico.becker@kf-interactive.com" }
   s.source       = { :git => "https://github.com/trispo/KFActionSheet.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '6.0'

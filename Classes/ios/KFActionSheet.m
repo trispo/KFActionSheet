@@ -10,17 +10,24 @@
 #import "KFActionSheetButton.h"
 #import "KFActionView.h"
 
+
 @interface KFActionSheet ()
+
 
 @property (strong, nonatomic) NSMutableDictionary *buttonActionHandlers;
 
 @property (strong, nonatomic) NSLayoutConstraint *actionSheetBottomConstraint;
+
 @property (strong, nonatomic) KFActionView *actionView;
 
 @property (strong, nonatomic) UIView *backgroundView;
 
 @property (nonatomic, strong) UIWindow *oldKeyWindow;
+
 @property (strong, nonatomic) UIWindow *actionSheetWindow;
+
+@property (nonatomic) BOOL isVisible;
+
 
 @end
 
@@ -35,6 +42,8 @@
         self.buttonActionHandlers = [NSMutableDictionary dictionary];
         [self createBackgroundView];
         [self createActionView];
+        
+        _animationDuration = .3f;
     }
     return self;
 }
@@ -72,7 +81,7 @@
     
     __weak KFActionSheet *weakSelf = self;
     self.actionSheetBottomConstraint.constant = [self.actionView intrinsicContentSize].height;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 0;
         [weakSelf layoutIfNeeded];
@@ -86,11 +95,16 @@
         {
             handler(weakSelf);
         }
+        
+        if (finished)
+        {
+            self.isVisible = NO;
+        }
     }];
 }
 
 
-- (void)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addDestructiveButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *button = [self buttonWithTitle:title image:image handler:handler];
     [button setTitleColor:[UIColor colorWithRed:0.887 green:0.159 blue:0.123 alpha:1.000] forState:UIControlStateNormal];
@@ -102,16 +116,18 @@
     }
 
     [self.actionView addButton:button];
+    return button;
 }
 
 
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addButtonWithTitle:(NSString *)title image:(UIImage *)image handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *button = [self buttonWithTitle:title image:image handler:handler];
     [button setTitleColor:[UIColor colorWithWhite:0.200 alpha:1.000] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
         
     [self.actionView addButton:button];
+    return button;
 }
 
 
@@ -144,7 +160,7 @@
 }
 
 
-- (void)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler
+- (KFActionSheetButton *)addCancelButtonWithTitle:(NSString *)title backgroundImage:(UIImage *)backgroundImage handler:(KFActionSheetButtonHandler)handler
 {
     KFActionSheetButton *cancelButton = [KFActionSheetButton new];
     [cancelButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
@@ -161,11 +177,18 @@
     }
 
     [self.actionView addCancelButton:cancelButton];
+    
+    return cancelButton;
 }
 
 
 - (void)show
 {
+    if (self.isVisible)
+    {
+        return;
+    }
+    
     self.oldKeyWindow = [[UIApplication sharedApplication] keyWindow];
 
     self.frame = self.oldKeyWindow.bounds;
@@ -189,7 +212,7 @@
     self.actionSheetBottomConstraint.constant = 0;
 
     __weak KFActionSheet *weakSelf = self;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^
     {
         weakSelf.backgroundView.alpha = 1;
         [weakSelf layoutIfNeeded];
