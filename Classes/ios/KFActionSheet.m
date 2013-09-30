@@ -80,6 +80,7 @@
     {
         [weakSelf.actionSheetWindow removeFromSuperview];
         [weakSelf removeFromSuperview];
+        [weakSelf.oldKeyWindow makeKeyWindow];
 
         if (handler != nil)
         {
@@ -174,7 +175,7 @@
         UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         window.opaque = NO;
-        window.windowLevel = UIWindowLevelAlert;
+        window.windowLevel = UIWindowLevelAlert - 1;
         self.actionSheetWindow = window;
     }
 
@@ -194,9 +195,6 @@
         [weakSelf layoutIfNeeded];
 
     } completion:nil];
-
-    [self.oldKeyWindow makeKeyWindow];
-    self.oldKeyWindow.hidden = NO;
 }
 
 @end
