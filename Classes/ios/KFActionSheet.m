@@ -9,7 +9,7 @@
 #import "KFActionSheet.h"
 #import "KFActionSheetButton.h"
 #import "KFActionView.h"
-
+#import "KFActionSheetViewController.h"
 
 @interface KFActionSheet ()
 
@@ -87,8 +87,9 @@
         [weakSelf layoutIfNeeded];
     } completion:^(BOOL finished)
     {
-        [weakSelf.actionSheetWindow removeFromSuperview];
         [weakSelf removeFromSuperview];
+        weakSelf.actionSheetWindow.rootViewController = nil;
+        [weakSelf.actionSheetWindow removeFromSuperview];
         [weakSelf.oldKeyWindow makeKeyWindow];
 
         if (handler != nil)
@@ -200,12 +201,16 @@
         window.opaque = NO;
         window.windowLevel = UIWindowLevelAlert - 1;
         self.actionSheetWindow = window;
+
     }
+
+    KFActionSheetViewController *viewController = [KFActionSheetViewController new];
+    viewController.view = self;
 
     self.actionSheetBottomConstraint.constant = [self.actionView intrinsicContentSize].height;
     [self layoutIfNeeded];
 
-    [self.actionSheetWindow addSubview:self];
+    self.actionSheetWindow.rootViewController = viewController;
     [self.actionSheetWindow makeKeyAndVisible];
 
     self.backgroundView.alpha = 0;
