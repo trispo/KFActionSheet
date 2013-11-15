@@ -10,4 +10,6 @@
 
 @interface KFActionSheetViewController : UIViewController
 
+- (instancetype)initWithWindow:(UIWindow *)window;
+
 @end
