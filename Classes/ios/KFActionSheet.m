@@ -204,7 +204,7 @@
 
     }
 
-    KFActionSheetViewController *viewController = [KFActionSheetViewController new];
+    KFActionSheetViewController *viewController = [[KFActionSheetViewController alloc] initWithWindow:self.oldKeyWindow];
     viewController.view = self;
 
     self.actionSheetBottomConstraint.constant = [self.actionView intrinsicContentSize].height;
